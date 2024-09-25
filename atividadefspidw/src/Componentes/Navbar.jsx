@@ -45,9 +45,9 @@ function Navbar ( ) {
                 </Link>
             </li>
             <li className="nav-link">
-                <Link to='/'>
-                    <FaWifi></FaWifi>
-                <span className="mx-2">Status da igreja (em desenvolvimento)</span>
+                <Link to='/doacoes'>
+                <FaMoneyBill></FaMoneyBill>
+                <span className="mx-2">Doações</span>
                 </Link>
             </li>
         </div>

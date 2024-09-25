@@ -1,36 +1,36 @@
-
 import {FaCog, FaEdit, FaListAlt, FaPlusCircle, FaSearchPlus, FaTrash} from "react-icons/fa"
 import {useEffect, useState} from "react"
 import {Container, Card, Row, Col, Button, Form, Table} from "react-bootstrap"
 import {Link} from 'react-router-dom'
-import DoadorService from '../../services/DoadorService'
+import DoacaoService from '../../services/DoacaoService'
 
-const doadorService = new DoadorService ( )
-function Doadores ( ) {
-    const [listaDoadores, setListaDoadores] = useState([ ])
+const doacaoService = new DoacaoService ( )
+
+function Doacao ( ) {
+    const [listaDoacoes, setListaDoacoes] = useState([ ])
     const [termoBusca, setTermoBusca] = useState("")
     const handleBuscaChange = (event) => {
         setTermoBusca(event.target.value)
     }
 
     const handleFiltrar = async ( )=> {
-        await listarDoadores(termoBusca)
+        await listarDoacoes(termoBusca)
     }
 
-    const listarDoadores = async (termoBusca) => {
+    const listarDoacoes = async (termoBusca) => {
         let dados = []
         if(termoBusca) {
-            dados = await doadorService.filtrar(termoBusca)
-            setListaDoadores(dados)
+            dados = await doacaoService.filtrar(termoBusca)
+            setListaDoacoes(dados)
         } else {
-            dados = await doadorService.obterTodos( )
-            setListaDoadores(dados)
+            dados = await doacaoService.obterTodos( )
+            setListaDoacoes(dados)
         }
 
     }
 
     useEffect(( )=>{
-        listarDoadores ( )
+        listarDoacoes ( )
     }, [ ])
 /*         const listaSalva = localStorage.getItem('evento')
             if(listaSalva!=null) {
@@ -39,9 +39,9 @@ function Doadores ( ) {
 
 
     const handleExcluir = async (id) => {
-        if(window.confirm('Tem certeza que deseja excluir o doador?')) {
-            await doadorService.delete(id)
-            await listarDoadores( )
+        if(window.confirm('Tem certeza que deseja excluir a doação?')) {
+            await doacaoService.delete(id)
+            await listarDoacoes( )
         }
     }
 /*         const novosEventos = listaEventos.filter(evento => evento.id!==id)
@@ -50,13 +50,13 @@ function Doadores ( ) {
 
 
     return (<>
-        <h1><FaListAlt></FaListAlt> Doadores</h1>
+        <h1><FaListAlt></FaListAlt> Doações</h1>
 
         <Container>
 
         <Col lg='12'>
                 <div className="d-grid">
-                <Button size="lg" as={Link} to='/doadores/novo' variant="primary"><FaPlusCircle></FaPlusCircle></Button>
+                <Button size="lg" as={Link} to='/doacoes/novo' variant="primary"><FaPlusCircle></FaPlusCircle></Button>
                 </div>
         </Col>
 
@@ -64,7 +64,7 @@ function Doadores ( ) {
         </Container>
         <Container>
         <Card>
-            <Card.Header as="h4">Doadores cadastrados</Card.Header>
+            <Card.Header as="h4">Doações cadastradas</Card.Header>
             <Card.Body>
             <Row lg='12'>
                 <div className="d-grid">
@@ -79,30 +79,29 @@ function Doadores ( ) {
                     <th>Código</th>
                     <th>Nome</th>
                     <th>CPF</th>
-                    <th>Gênero</th>
-                    <th>Telefone</th>
-                    <th>Email</th>
-                    <th>Endereço</th>
+                    <th>Tipo</th>
+                    <th>Telefone</th> 
+                    <th>Descrição</th>
                     <th>Membro</th>
                     <th><FaCog></FaCog></th>
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        listaDoadores.length<=0? "Nenhuma doador registrado.":
-                        listaDoadores.map(doador=>(
+                        listaDoacoes.length<=0? "Nenhuma doação registrada.":
+                        listaDoacoes.map(doacao=>(
                         <tr>
-                            <td>{doador.id}</td>
-                            <td>{doador.nome}</td> 
-                            <td>{doador.cpf}</td>
-                            <td>{doador.genero}</td>
-                            <td>{doador.telefone}</td>
-                            <td>{doador.email}</td>
-                            <td>{doador.endereco}</td>
-                            <td>{doador.membro}</td>
+                            <td>{doacao.id}</td>
+                            <td>{doacao.nome}</td> 
+                            <td>{doacao.cpf}</td>
+                            <td>{doacao.tipo}</td>
+                            <td>{doacao.telefone}</td>
+                         
+                            <td>{doacao.descricao}</td>
+                            <td>{doacao.membro}</td>
                             <td id="BotoesTabela">
-                                <Link to = {`/doadores/${doador.id}`} className="btn btn-warning m-1"><FaEdit></FaEdit> Alterar</Link>
-                                <Button onClick={( )=> handleExcluir(doador.id)} className="btn btn-danger m-1"><FaTrash></FaTrash> Excluír</Button>
+                                <Link to = {`/doacoes/${doacao.id}`} className="btn btn-warning m-1"><FaEdit></FaEdit> Alterar</Link>
+                                <Button onClick={( )=> handleExcluir(doacao.id)} className="btn btn-danger m-1"><FaTrash></FaTrash> Excluir</Button>
                             </td>
                         </tr>
                         ))
@@ -115,4 +114,4 @@ function Doadores ( ) {
     </>)
 }
 
-export default Doadores
+export default Doacao

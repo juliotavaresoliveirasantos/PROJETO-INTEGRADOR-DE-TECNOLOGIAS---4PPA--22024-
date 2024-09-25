@@ -54,7 +54,7 @@ class DoadorController {
     async filtrar(req, res){
         const termobusca = req.params.termobusca
         const  doadores = await  doadorModel.filtrar(termobusca)
-        return res.status(200).json( doador)
+        return res.status(200).json( doadores)
     }
 }
 

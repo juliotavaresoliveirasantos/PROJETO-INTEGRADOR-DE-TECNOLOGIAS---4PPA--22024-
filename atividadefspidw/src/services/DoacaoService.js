@@ -1,7 +1,7 @@
 const API_BASE_URL = 'http://localhost:3000';
-class DoadorService {
+class DoacaoService {
     async obterTodos( ) {
-        const response = await fetch(`${API_BASE_URL}/doadores`,{
+        const response = await fetch(`${API_BASE_URL}/doacoes`,{
             headers:{
                 'Content-Type':'application/json'
             }
@@ -15,7 +15,7 @@ class DoadorService {
     }
 
     async obterPorId(id) {
-        const response = await fetch(`${API_BASE_URL}/doadores/${id}`,{
+        const response = await fetch(`${API_BASE_URL}/doacoes/${id}`,{
             headers:{
                 'Content-Type':'application/json'
             }
@@ -28,50 +28,50 @@ class DoadorService {
         }
     }
 
-    async adicionar(doadorDados) {
+    async adicionar(doacaoDados) {
         try {
-            const response = await fetch(`${API_BASE_URL}/doadores`,{
+            const response = await fetch(`${API_BASE_URL}/doacoes`,{
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json'
                 },
-                body:JSON.stringify(doadorDados)
+                body:JSON.stringify(doacaoDados)
             })
             if(!response.ok) {
                 console.log('Ocorreu um erro ao adicionar.')
-                throw new Error('Erro ao cadastrar o doador.')
+                throw new Error('Erro ao cadastrar a doação.')
             }
         } catch (error) {
             throw error
         }
     }
 
-    async atualizar(idDoador, doadorDados) {
+    async atualizar(idDoacao, doacaoDados) {
         try {
-            const response = await fetch(`${API_BASE_URL}/doadores/${idDoador}`,{
+            const response = await fetch(`${API_BASE_URL}/doacoes/${idDoacao}`,{
                 method:'PUT',
                 headers:{
                     'Content-Type':'application/json'
                 },
-                body:JSON.stringify(doadorDados)
+                body:JSON.stringify(doacaoDados)
             })
             if(!response.ok) {
                 console.log('Ocorreu um erro ao atualizar.')
-                throw new Error('Erro ao atualizar o doador.')
+                throw new Error('Erro ao atualizar a doacao.')
             }
         } catch (error) {
             throw error
         }
     }
 
-    async delete(idDoador) {
+    async delete(idDoacao) {
         try {
-            const response = await fetch(`${API_BASE_URL}/doadores/${idDoador}`,{
+            const response = await fetch(`${API_BASE_URL}/doacoes/${idDoacao}`,{
                 method:'DELETE'
             })
             if(!response.ok) {
                 console.log('Ocorreu um erro ao deletear.')
-                throw new Error('Erro ao deletar o doador.')
+                throw new Error('Erro ao deletar a doação.')
             }
         } catch (error) {
             throw error
@@ -79,7 +79,7 @@ class DoadorService {
     }
 
     async filtrar(termobusca) {
-        const response = await fetch(`${API_BASE_URL}/doadores/filtrar/${termobusca}`,{
+        const response = await fetch(`${API_BASE_URL}/doacoes/filtrar/${termobusca}`,{
             headers:{
                 'Content-Type':'application/json'
             }
@@ -93,4 +93,4 @@ class DoadorService {
     }
 }
 
-export default DoadorService
+export default DoacaoService

@@ -3,36 +3,34 @@ import {Container, Card, Button, Col, Form, Alert, Row} from 'react-bootstrap'
 import {useEffect, useState} from "react"
 import {FaArrowLeft, FaCheckCircle, FaFileUpload, FaRegSave} from "react-icons/fa"
 import {Link, useParams} from "react-router-dom"
-import DoadorService from '../../services/DoadorService'
+import DoacaoService from '../../services/DoacaoService'
 
-const doadorService = new DoadorService( )
-function DoadorCadastro ( ) {
+const doacaoService = new DoacaoService( )
+function DoacaoCadastro ( ) {
     const [sucessoMensagem, setSucessoMensagem] = useState('')
     const [validated, setValidated] = useState(false)
     const [nome, setNome] = useState("")
     const [cpf, setCpf] = useState("")
-    const [genero, setGenero] = useState("")
+    const [tipo, setTipo] = useState("")
     const [telefone, setTelefone] = useState("")
-    const [email, setEmail] = useState("")
-    const [endereco, setEndereco] = useState("")
+    const [descricao, setDesc] = useState("")
     const [membro, setMembro] = useState("")
     const [errors, setErrors] = useState({ })
-    const {idDoador} = useParams( )
+    const {idDoacao} = useParams( )
 
     useEffect(( )=> {
-        const obterDoador = async ()=> {
-            const dados = await doadorService.obterPorId(idDoador)
+        const obterDoacao = async ()=> {
+            const dados = await doacaoService.obterPorId(idDoacao)
             console.log('dados',dados)
             setNome(dados.nome)
             setCpf(dados.cpf)
-            setGenero(dados.genero)
+            setTipo(dados.tipo)
             setTelefone(dados.telefone)
-            setEmail(dados.email)
-            setEndereco(dados.endereco)
+            setDesc(dados.descricao)
             setMembro(dados.membro)
         }
-        if(idDoador!==undefined){
-         obterDoador()
+        if(idDoacao!==undefined){
+         obterDoacao()
         }
     })
 
@@ -63,14 +61,14 @@ function DoadorCadastro ( ) {
     }
 
 
-    const handleGeneroChange = (e) => {
+    const handleTipoChange = (e) => {
         const value = e.target.value
-            setGenero(value)
+            setTipo(value)
             if(value && value.length<=50) {
-                setErrors((prev)=>({...prev,genero:null}))
+                setErrors((prev)=>({...prev,tipo:null}))
             } else {
                 if(value===""){
-                    setErrors((prev)=>({...prev,genero:'Genêro não pode estar vazio.'}))
+                    setErrors((prev)=>({...prev,genero:'Tipo não pode estar vazio.'}))
                 }
             }
     }
@@ -96,15 +94,15 @@ function DoadorCadastro ( ) {
             if(!nome) {
                 newErrors.nome='Nome do doador não pode estar vazio.'
             } else if(nome.length>50) {
-                newErrors.descricao='Nome do doador não pode exceder 50 caracteres.'
+                newErrors.nome='Nome do doador não pode exceder 50 caracteres.'
             }
 
             if (!cpf) {
                 newErrors.cpf='CPF não pode estar vazio.'
             }
 
-            if (!genero) {
-                newErrors.genero='Gênero não pode estar vazio.'
+            if (!tipo) {
+                newErrors.tipo='Tipo não pode estar vazio.'
             }
 
             if (!membro) {
@@ -115,24 +113,23 @@ function DoadorCadastro ( ) {
             if(Object.keys(newErrors).length>0) {
                 setErrors(newErrors)
             } else {
-                const doador = {
+                const doacao = {
                     id: 0,
-                    nome: form.nomeDoador.value,
-                    cpf: form.cpfDoador.value,
-                    genero: form.generoDoador.value,
-                    telefone: form.telefoneDoador.value,
-                    email: form.emailDoador.value,
-                    endereco: form.enderecoDoador.value,
-                    membro: form.membroDoador.value
+                    nome,
+                    cpf,
+                    tipo,
+                    telefone,
+                    descricao,
+                    membro
                 }
-                console.log('doador',doador)
+                console.log('doacao',doacao)
 
-                if(idDoador===undefined) {
-                    await doadorService.adicionar(doador)
-                    setSucessoMensagem('Doador cadastrado com sucesso!')
+                if(idDoacao===undefined) {
+                    await doacaoService.adicionar(doacao)
+                    setSucessoMensagem('Doação cadastrado com sucesso!')
                 } else {
-                    await doadorService.atualizar(idDoador, doador)
-                    setSucessoMensagem('Doador atualizado com sucesso!')
+                    await doacaoService.atualizar(idDoacao, doacao)
+                    setSucessoMensagem('Doação atualizada com sucesso!')
                 }
 
                 
@@ -146,15 +143,15 @@ function DoadorCadastro ( ) {
     }
 
     return (<>
-    <Button variant="secondary" as={Link} to='/doadores'><FaArrowLeft></FaArrowLeft> Voltar</Button>
+    <Button variant="secondary" as={Link} to='/doacoes'><FaArrowLeft></FaArrowLeft> Voltar</Button>
     <br></br>
     <br></br>
 
     <Container className="mt-5">
-    <div id="CardCadastroDoador">
+    <div id="CardCadastroDoacao">
     <Card>
     <Card.Header>
-            <h1><FaFileUpload></FaFileUpload> Cadastro de doador {idDoador}</h1>
+            <h1><FaFileUpload></FaFileUpload> Cadastro de doação {idDoacao}</h1>
     </Card.Header>
 
 
@@ -164,12 +161,12 @@ function DoadorCadastro ( ) {
         <Row>
         <Col id="ColInfoDoador">
             <Col>
-            <Form.Group controlId="nomeDoador">
+            <Form.Group controlId="nomeDoacao">
                 <Form.Label>Nome</Form.Label>
                     <Form.Control
                         defaultValue={nome}
                         type="text"
-                        id="nomeDoador"
+                        id="nomeDoacao"
                         required
                         onChange={handleNomeChange}
                         isInvalid={!!errors.nome}
@@ -183,12 +180,12 @@ function DoadorCadastro ( ) {
 
 
             <Col>
-            <Form.Group controlId="cpfDoador">
+            <Form.Group controlId="cpfDoacao">
                 <Form.Label>CPF</Form.Label>
                 <Form.Control
                         defaultValue={cpf}
                         type="cpf"
-                        id="cpfDoador"
+                        id="cpfDoacao"
                         required
                         onChange={handleCpfChange}
                         isInvalid={!!errors.cpf}
@@ -201,29 +198,29 @@ function DoadorCadastro ( ) {
             <br></br>
 
             <Col>
-            <Form.Group controlId="generoDoador">
-                <Form.Label>Gênero</Form.Label>
-                    <Form.Select defaultValue={genero} onChange={handleGeneroChange} required aria-label="Default select example">
-                        <option value="" hidden selected>Selecione o gênero</option>
-                        <option value="masculino ">Maculino</option>
-                        <option value=" feminino">Feminino</option>
-                        <option value=" naodizer">Prefiro não dizer</option>
+            <Form.Group controlId="tipoDoacao">
+                <Form.Label>Tipo</Form.Label>
+                    <Form.Select defaultValue={tipo} onChange={handleTipoChange} required aria-label="Default select example">
+                        <option value="" hidden selected>Selecione o tipo</option>
+                        <option value="dinheiro ">Dinheiro</option>
+                        <option value=" objeto">Objeto</option>
+                        <option value=" outros">Outros</option>
                         
                     </Form.Select>
                     <Form.Control.Feedback type="invalid">
-                            Selecione o gênero do doador
+                            Selecione o tipo da doação
                     </Form.Control.Feedback>
             </Form.Group>
             </Col>
             <br></br>
 
             <Col>
-            <Form.Group controlId="telefoneDoador">
+            <Form.Group controlId="telefoneDoacao">
                 <Form.Label>Telefone</Form.Label>
                     <Form.Control
                         defaultValue={telefone}
                         type="tel"
-                        id="telefoneDoador"
+                        id="telefoneDoacao"
                         required
                         
                         />
@@ -234,44 +231,28 @@ function DoadorCadastro ( ) {
             </Col>
             <br></br>
 
-            <Col>
-            <Form.Group controlId="emailDoador">
-                <Form.Label>Email</Form.Label>
-                    <Form.Control
-                        type="email"
-                        id="emailDoador"
-                        required
-                        defaultValue={email}
-                        
-                       
-                        />
-                    <Form.Control.Feedback type="invalid">
-                        {errors.email}
-                    </Form.Control.Feedback>
-            </Form.Group>
-            </Col>
-            <br></br>
+            
 
             <Col>
-            <Form.Group controlId="enderecoDoador">
-                <Form.Label>Endereço</Form.Label>
+            <Form.Group controlId="descricaoDoacao">
+                <Form.Label>Descrição</Form.Label>
                     <Form.Control
-                    type="local"
-                    id="enderecoDoador"
+                    type="desc"
+                    id="descricaoDoacao"
                     required
-                    defaultValue={endereco}
+                    defaultValue={descricao}
                     
                    
                     />
                     <Form.Control.Feedback type="invalid">
-                        {errors.endereco}
+                        {errors.descricao}
                     </Form.Control.Feedback>
             </Form.Group>
             </Col>
             <br></br>
 
             <Col>
-            <Form.Group controlId="membroDoador">
+            <Form.Group controlId="membroDoacao">
                 <Form.Label>Membro</Form.Label>
                 <Form.Select value={membro} onChange={handleMembroChange} required>
     <option value="" hidden>Selecione</option>
@@ -307,4 +288,4 @@ function DoadorCadastro ( ) {
     </>);
 }
 
-export default DoadorCadastro
+export default DoacaoCadastro

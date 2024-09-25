@@ -13,6 +13,10 @@ import Doadores from './Paginas/Doadores/Doadores';
 import DoadorCadastro from './Paginas/Doadores/DoadorCadastro';
 import Membros from './Paginas/Membros/Membros'; // Importando a página de membros
 import MembroCadastro from './Paginas/Membros/MembroCadastro'; // Importando a página de cadastro de membros
+import Doacao from './Paginas/Doacoes/Doacao';
+import DoacaoCadastro from './Paginas/Doacoes/DoacoesCad';
+
+
 
 const router = createBrowserRouter(
   [
@@ -70,6 +74,18 @@ const router = createBrowserRouter(
         {
           path: '/membros/novo', 
           element: <MembroCadastro></MembroCadastro>
+        },
+        {
+          path: '/doacoes', 
+          element: <Doacao></Doacao>
+        },
+        {
+          path: '/doacoes/:idDoacao', 
+          element: <DoacaoCadastro></DoacaoCadastro>
+        },
+        {
+          path: '/doacoes/novo', 
+          element: <DoacaoCadastro></DoacaoCadastro>
         }
       ]
     }

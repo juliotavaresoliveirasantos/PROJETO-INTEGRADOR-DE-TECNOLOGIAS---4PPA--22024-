@@ -6,7 +6,7 @@ class Database {
             host:'localhost',
             user:'root',
             database:'atividade',
-            password:'123456'
+            password:''
         })
     }
     async ExecutaComando(sql, params = [ ]){
