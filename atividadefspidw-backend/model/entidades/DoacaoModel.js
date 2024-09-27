@@ -7,7 +7,6 @@ class DoacaoModel {
         this.nome = nome
         this.cpf = cpf
         this.tipo = tipo
-       
         this.telefone = telefone
         this.descricao = descricao
         this.membro = membro
@@ -24,7 +23,7 @@ class DoacaoModel {
     }
 
     async adicionar(dadosDoacao){
-        await database.ExecutaComandoNonQuery('insert into doacoes set ?',dadosDoacao)
+        await database.ExecutaComandoNonQuery('insert into doacoes set ?', dadosDoacao)
     }
 
     async atualizar(id, dadosDoacao){

@@ -29,7 +29,7 @@ class DoacaoController {
     async atualizar(req, res){
         const id = req.params.id
         const  {nome, cpf, tipo,telefone, descricao,  membro} = req.body
-        const doacao = new DoacaoModel (nome, cpf, tipo,telefone, descricao,  membro)
+        const doacao = new DoacaoModel (id,nome, cpf, tipo,telefone, descricao,  membro)
 
         try {
             await doacaoModel.atualizar(id, doacao)

@@ -102,7 +102,7 @@ function Doadores ( ) {
                             <td>{doador.membro}</td>
                             <td id="BotoesTabela">
                                 <Link to = {`/doadores/${doador.id}`} className="btn btn-warning m-1"><FaEdit></FaEdit> Alterar</Link>
-                                <Button onClick={( )=> handleExcluir(doador.id)} className="btn btn-danger m-1"><FaTrash></FaTrash> Excluír</Button>
+                                <Button onClick={( )=> handleExcluir(doador.id)} className="btn btn-danger m-1"><FaTrash></FaTrash> Excluir</Button>
                             </td>
                         </tr>
                         ))

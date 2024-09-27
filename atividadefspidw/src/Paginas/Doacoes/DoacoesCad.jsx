@@ -72,6 +72,34 @@ function DoacaoCadastro ( ) {
                 }
             }
     }
+
+    const handleTelefoneChange = (e) => {
+        const value = e.target.value
+            setTelefone(value)
+            if(value && value.length<=50) {
+                setErrors((prev)=>({...prev,telefone:null}))
+            } else {
+                if(value==="") {
+                    setErrors((prev)=>({...prev,telefone:'Telefone não pode estar vazio.'}))
+                } else {
+                    setErrors((prev)=>({...prev,telefone:'Telefone não pode exceder 50 caracteres.'}))
+                }
+            }
+    }
+
+    const handleDescricaoChange = (e) => {
+        const value = e.target.value
+            setDesc(value)
+            if(value && value.length<=50) {
+                setErrors((prev)=>({...prev,descricao:null}))
+            } else {
+                if(value==="") {
+                    setErrors((prev)=>({...prev,descricao:'Descrição não pode estar vazio.'}))
+                } else {
+                    setErrors((prev)=>({...prev,descricao:'Descricão não pode exceder 50 caracteres.'}))
+                }
+            }
+    }
     const handleMembroChange = (e) => {
         const value = e.target.value;
         setMembro(value);
@@ -114,7 +142,7 @@ function DoacaoCadastro ( ) {
                 setErrors(newErrors)
             } else {
                 const doacao = {
-                    id: 0,
+                    
                     nome,
                     cpf,
                     tipo,
@@ -222,6 +250,7 @@ function DoacaoCadastro ( ) {
                         type="tel"
                         id="telefoneDoacao"
                         required
+                        onChange={handleTelefoneChange}
                         
                         />
                     <Form.Control.Feedback type="invalid">
@@ -241,7 +270,7 @@ function DoacaoCadastro ( ) {
                     id="descricaoDoacao"
                     required
                     defaultValue={descricao}
-                    
+                    onChange={handleDescricaoChange}
                    
                     />
                     <Form.Control.Feedback type="invalid">
@@ -256,8 +285,8 @@ function DoacaoCadastro ( ) {
                 <Form.Label>Membro</Form.Label>
                 <Form.Select value={membro} onChange={handleMembroChange} required>
     <option value="" hidden>Selecione</option>
-    <option value="S">Sim</option>
-    <option value="N">Não</option>
+    <option value="Sim">Sim</option>
+    <option value="Não">Não</option>
 </Form.Select>
                     <Form.Control.Feedback type="invalid">
                             Selecione se o doador é um membro ou não

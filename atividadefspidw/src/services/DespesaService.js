@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:3001'
+const API_BASE_URL = 'http://localhost:3006'
 class DespesaService {
     async obterTodos( ) {
         const response = await fetch(`${API_BASE_URL}/despesa`,{

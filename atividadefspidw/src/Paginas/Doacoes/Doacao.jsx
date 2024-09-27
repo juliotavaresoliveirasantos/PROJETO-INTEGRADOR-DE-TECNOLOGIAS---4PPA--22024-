@@ -96,7 +96,6 @@ function Doacao ( ) {
                             <td>{doacao.cpf}</td>
                             <td>{doacao.tipo}</td>
                             <td>{doacao.telefone}</td>
-                         
                             <td>{doacao.descricao}</td>
                             <td>{doacao.membro}</td>
                             <td id="BotoesTabela">

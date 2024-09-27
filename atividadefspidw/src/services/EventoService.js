@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:3001'
+const API_BASE_URL = 'http://localhost:3006'
 class EventoService {
     async obterTodos( ) {
         const response = await fetch(`${API_BASE_URL}/evento`,{
